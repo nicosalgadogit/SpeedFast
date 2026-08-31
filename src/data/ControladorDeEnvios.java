@@ -18,7 +18,8 @@ public class ControladorDeEnvios implements Despachable, Cancelable, Rastreable 
 
     @Override
     public void cancelar(Pedido p) {
-        System.out.println("Pedido #" + p.getIdPedido() + " cancelado.");
+        System.out.println("Cancelando pedido #" + p.getIdPedido() + "...");
+        System.out.println("Pedido #" + p.getIdPedido() +  " cancelado exitosamente.");
     }
 
     @Override

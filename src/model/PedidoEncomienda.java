@@ -40,11 +40,11 @@ public class PedidoEncomienda extends Pedido {
     @Override
     public void asignarRepartidor() {
         super.asignarRepartidor();
-        System.out.println("Validando peso y embalaje... " + (embalajeValido ? "OK" : "NO") + "\n Peso: " + this.peso);
+        System.out.println("Validando peso y embalaje... " + (embalajeValido ? " OK" : "NO") + "\n Peso: " + this.peso);
     }
 
     @Override
     public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Repartidor " + nombreRepartidor + " asignado.\n Validando peso y embalaje..." + (embalajeValido ? "OK" : "NO") + "\n Peso: " + this.peso);
+        System.out.println("Repartidor " + nombreRepartidor + " asignado.\n Validando peso y embalaje..." + (embalajeValido ? " OK" : "NO") + "\n Peso: " + this.peso);
     }
 }

@@ -34,11 +34,11 @@ public class PedidoComida extends Pedido {
     @Override
     public void asignarRepartidor() {
         super.asignarRepartidor();
-        System.out.println("Verificando mochila termica... " + (mochilaTermica ? "OK" : "NO"));
+        System.out.println("Verificando mochila termica... " + (mochilaTermica ? " OK" : "NO"));
     }
     @Override
     public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Repartidor " + nombreRepartidor + " asignado.\n Verificando mochila termica... " + (mochilaTermica ? "OK" : "NO"));
+        System.out.println("Repartidor " + nombreRepartidor + " asignado.\n Verificando mochila termica... " + (mochilaTermica ? " OK" : "NO"));
     }
 
 
