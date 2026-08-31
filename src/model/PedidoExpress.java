@@ -33,5 +33,14 @@ public class PedidoExpress extends Pedido {
     public double calcularTiempoEntrega() {
         return getDistanciaKm() > 5 ? 10 + 5 : 10;
     }
+    @Override
+    public void asignarRepartidor() {
+        super.asignarRepartidor();
+        System.out.println("Repartidor mas cercano con disponibilidad inmediata... " + (disponibilidadInmediata ? "OK" : "NO") + " Encontrado,se encuentra a " + this.getDistanciaKm() +"KM");
+    }
 
+    @Override
+    public void asignarRepartidor(String nombreRepartidor) {
+        System.out.println("Repartidor " + nombreRepartidor + " asignado.\n Repartidor con disponibilidad inmediata..." + (disponibilidadInmediata ? "OK" : "NO") + " Encontrado,se encuentra a " + this.getDistanciaKm() + "KM");
+    }
 }

@@ -37,5 +37,14 @@ public class PedidoEncomienda extends Pedido {
     public double calcularTiempoEntrega() {
         return Math.round(20 + 1.5 * getDistanciaKm());
     }
+    @Override
+    public void asignarRepartidor() {
+        super.asignarRepartidor();
+        System.out.println("Validando peso y embalaje... " + (embalajeValido ? "OK" : "NO") + "\n Peso: " + this.peso);
+    }
 
+    @Override
+    public void asignarRepartidor(String nombreRepartidor) {
+        System.out.println("Repartidor " + nombreRepartidor + " asignado.\n Validando peso y embalaje..." + (embalajeValido ? "OK" : "NO") + "\n Peso: " + this.peso);
+    }
 }

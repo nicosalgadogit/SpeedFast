@@ -13,6 +13,7 @@ public abstract class Pedido {
         this.direccionEntrega = "";
         this.distanciaKm = 0;
     }
+
     //Const con param
     public Pedido(int idPedido, String direccionEntrega, double distanciaKm) {
         this.idPedido = idPedido;
@@ -25,27 +26,45 @@ public abstract class Pedido {
     public int getIdPedido() {
         return idPedido;
     }
+
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
     }
+
     public String getDireccionEntrega() {
         return direccionEntrega;
     }
+
     public void setDireccionEntrega(String direccionEntrega) {
         this.direccionEntrega = direccionEntrega;
     }
+
     public double getDistanciaKm() {
         return distanciaKm;
     }
+
     public void setDistanciaKm(double distanciaKm) {
         this.distanciaKm = distanciaKm;
     }
 
     public void mostrarResumen() {
-        System.out.println("PedidoComida: #" + idPedido + " \n Direccion: " + direccionEntrega + " \n Distancia: " + distanciaKm + "Km");
+        System.out.println("Pedido #" + idPedido);
+        System.out.println(" Direccion: " + direccionEntrega);
+        System.out.println(" Distancia: " + distanciaKm + "Km");
     }
 
 
     public abstract double calcularTiempoEntrega();
 
+
+    public void asignarRepartidor() {
+        System.out.println("Buscando repartidor para el pedido #" + idPedido);
+    }
+
+
+    //Metodo asignarRepartidor()
+
+    public void asignarRepartidor(String nombreRepartidor) {
+        System.out.println("Repartidor asignado: " + nombreRepartidor);
+    }
 }
