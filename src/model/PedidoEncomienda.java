@@ -13,8 +13,8 @@ public class PedidoEncomienda extends Pedido {
     }
 
     //const con
-    public PedidoEncomienda(double peso, boolean embalajeValido, int idpedido, String direccionEntrega){
-        super(idpedido,direccionEntrega,"Encomienda");
+    public PedidoEncomienda(double peso, boolean embalajeValido, int idpedido, String direccionEntrega, double distanciaKm){
+        super(idpedido,direccionEntrega,distanciaKm );
         this.peso = peso;
         this.embalajeValido = embalajeValido;
     }
@@ -34,13 +34,8 @@ public class PedidoEncomienda extends Pedido {
     }
 
     @Override
-    public void asignarRepartidor() {
-        super.asignarRepartidor();
-        System.out.println("Validando peso y embalaje... " + (embalajeValido ? "OK" : "NO") + "\n Peso: " + this.peso);
+    public double calcularTiempoEntrega() {
+        return Math.round(20 + 1.5 * getDistanciaKm());
     }
 
-    @Override
-    public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Repartidor " + nombreRepartidor + " asignado.\n Validando peso y embalaje..." + (embalajeValido ? "OK" : "NO") + "\n Peso: " + this.peso);
-    }
 }

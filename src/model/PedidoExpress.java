@@ -4,7 +4,6 @@ public class PedidoExpress extends Pedido {
 
 
     private boolean disponibilidadInmediata;
-    private double distanciaKm;
 
 
     //const sin
@@ -12,14 +11,12 @@ public class PedidoExpress extends Pedido {
     public PedidoExpress(){
         super();
         this.disponibilidadInmediata = false;
-        this.distanciaKm = 0.0;
     }
 
     //const con
     public PedidoExpress(boolean disponibilidadInmediata, int idpedido, String direccionEntrega, double distanciaKm){
-        super(idpedido, direccionEntrega, "Compra Express");
+        super(idpedido, direccionEntrega, distanciaKm );
         this.disponibilidadInmediata = disponibilidadInmediata;
-        this.distanciaKm = distanciaKm;
     }
 
     //get-set
@@ -29,21 +26,12 @@ public class PedidoExpress extends Pedido {
     public void setDisponibilidadInmediata(boolean disponibilidadInmediata) {
         this.disponibilidadInmediata = disponibilidadInmediata;
     }
-    public double getDistanciaKm() {
-        return distanciaKm;
-    }
-    public void setDistanciaKm(double distanciaKm) {
-        this.distanciaKm = distanciaKm;
-    }
+
+
 
     @Override
-    public void asignarRepartidor() {
-        super.asignarRepartidor();
-        System.out.println("Repartidor mas cercano con disponibilidad inmediata... " + (disponibilidadInmediata ? "OK" : "NO") + "Encontrado,se encuentra a " + this.distanciaKm +"KM");
+    public double calcularTiempoEntrega() {
+        return getDistanciaKm() > 5 ? 10 + 5 : 10;
     }
 
-    @Override
-    public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Repartidor " + nombreRepartidor + " asignado.\n Repartidor con disponibilidad inmediata..."  + (disponibilidadInmediata ? "OK" : "NO") + " Encontrado,se encuentra a " + this.distanciaKm +"KM");
-    }
 }

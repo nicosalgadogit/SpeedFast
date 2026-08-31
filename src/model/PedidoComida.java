@@ -12,11 +12,9 @@ public class PedidoComida extends Pedido {
         this.mochilaTermica = false;
     }
 
-
-
     //const. con
-    public PedidoComida(Boolean mochilaTermica, int idpedido, String direccionEntrega) {
-        super(idpedido, direccionEntrega, "Comida");
+    public PedidoComida(Boolean mochilaTermica, int idpedido, String direccionEntrega, double distanciaKm) {
+        super(idpedido, direccionEntrega,distanciaKm );
         this.mochilaTermica = mochilaTermica;
     }
 
@@ -30,13 +28,8 @@ public class PedidoComida extends Pedido {
     }
 
     @Override
-    public void asignarRepartidor() {
-        super.asignarRepartidor();
-        System.out.println("Verificando mochila termica... " + (mochilaTermica ? "OK" : "NO"));
+    public double calcularTiempoEntrega() {
+        return 15 + 2 * getDistanciaKm();
     }
 
-    @Override
-    public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Repartidor " + nombreRepartidor + " asignado.\n Verificando mochila termica... " + (mochilaTermica ? "OK" : "NO"));
-    }
 }

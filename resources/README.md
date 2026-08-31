@@ -1,5 +1,5 @@
 ![Duoc UC](https://www.duoc.cl/wp-content/uploads/2022/09/logo-0.png)
-# 🧠 Actividad Semana 1 – Desarrollo Orientado a Objetos II
+# 🧠 Actividad Semana 2 – Desarrollo Orientado a Objetos II
 
 ## 👤 Autor del proyecto
 - **Nombre completo:** Nicolas Salgado
@@ -10,9 +10,9 @@
 ---
 
 ## 📘 Descripción general del sistema
-Este proyecto corresponde a la actividad sumativa de la Semana 1 de la asignatura Desarrollo Orientado a Objetos II. Simula el sistema de asignación de repartidores de **SpeedFast**, empresa de reparto a domicilio, aplicando **herencia**, **sobrescritura de métodos (@Override)** y **sobrecarga de métodos (overload)**.
+Este proyecto corresponde a la actividad sumativa de la Semana 2 de la asignatura Desarrollo Orientado a Objetos II. Es la continuación del sistema de asignación de repartidores de **SpeedFast**, incorporando esta semana **abstracción**: la clase `Pedido` pasa a ser una **clase abstracta**, definiendo el contrato común que las subclases deben cumplir.
 
-Se creó la clase base `Pedido`, con los atributos comunes a todo pedido (`idPedido`, `direccionEntrega`, `tipoPedido`) y el método genérico `asignarRepartidor()`. A partir de ella se derivan tres subclases —`PedidoComida`, `PedidoEncomienda` y `PedidoExpress`— cada una con su propio atributo distintivo y su propia lógica de validación, sobrescribiendo tanto la versión sin parámetros como la versión sobrecargada `asignarRepartidor(String nombreRepartidor)`.
+`Pedido` ahora contiene los atributos comunes (`idPedido`, `direccionEntrega`, `distanciaKm`), el método implementado `mostrarResumen()` (que imprime los datos básicos del pedido) y el método abstracto `calcularTiempoEntrega()`, cuya lógica varía en cada subclase. `PedidoComida`, `PedidoEncomienda` y `PedidoExpress` extienden `Pedido` e implementan `calcularTiempoEntrega()` con una fórmula propia según su tipo de servicio.
 
 ---
 
@@ -21,18 +21,18 @@ Se creó la clase base `Pedido`, con los atributos comunes a todo pedido (`idPed
 ```plaintext
 📁 src/
 ├── ui/      # Clase principal con el método main
-└── model/   # Clases de dominio: Pedido, PedidoComida, PedidoEncomienda, PedidoExpress
+└── model/   # Clases de dominio: Pedido (abstracta), PedidoComida, PedidoEncomienda, PedidoExpress
 ```
 
 ## 🧩 Paquetes y clases implementadas
 
 | Clase | Paquete | Descripción |
 |---|---|---|
-| `Pedido` | `model` | Clase base: atributos comunes, getters/setters, y `asignarRepartidor()` genérico (sobrescrito y sobrecargado) |
-| `PedidoComida` | `model` | Extiende `Pedido`. Agrega `mochilaTermica`; valida que el repartidor cuente con ella |
-| `PedidoEncomienda` | `model` | Extiende `Pedido`. Agrega `peso` y `embalajeValido`; valida ambos antes de asignar |
-| `PedidoExpress` | `model` | Extiende `Pedido`. Agrega `disponibilidadInmediata` (y `distanciaKm`); busca al repartidor más cercano disponible |
-| `Main` | `ui` | Ejecuta el programa: instancia un objeto de cada subclase (tipado como `Pedido`) y llama ambas versiones de `asignarRepartidor()` para evidenciar el polimorfismo |
+| `Pedido` | `model` | Clase **abstracta**: atributos comunes, getters/setters, `mostrarResumen()` implementado y `calcularTiempoEntrega()` abstracto |
+| `PedidoComida` | `model` | Extiende `Pedido`. Implementa `calcularTiempoEntrega()`: 15 min + 2 min por kilómetro |
+| `PedidoEncomienda` | `model` | Extiende `Pedido`. Implementa `calcularTiempoEntrega()`: 20 min + 1.5 min por kilómetro (ajustado a entero) |
+| `PedidoExpress` | `model` | Extiende `Pedido`. Implementa `calcularTiempoEntrega()`: 10 min base, +5 min extra si supera los 5 km |
+| `Main` | `ui` | Ejecuta el programa: instancia un objeto de cada subclase (tipado como `Pedido`), llama `mostrarResumen()` y muestra el tiempo estimado calculado por cada una |
 
 ---
 
@@ -49,13 +49,13 @@ git clone https://github.com/nicosalgadogit/SpeedFast.git
 3. Ejecuta el archivo `Main.java` desde el paquete `ui`.
 
 4. Por consola se mostrará, para cada tipo de pedido:
-    - El mensaje genérico de búsqueda de repartidor (sobrescrito según el tipo).
-    - El mensaje con el nombre del repartidor asignado y la validación específica de ese pedido (mochila térmica / peso y embalaje / cercanía y disponibilidad).
+   - El resumen básico del pedido (`mostrarResumen()`).
+   - El tiempo estimado de entrega, calculado con la fórmula propia de cada tipo (Comida / Encomienda / Compra Express).
 
 ---
 
 **Repositorio GitHub:** \[https://github.com/nicosalgadogit/SpeedFast.git]
-**Fecha de entrega:** \[30-08-2026]
+**Fecha de entrega:** \[completar fecha de entrega]
 
 ---
 
