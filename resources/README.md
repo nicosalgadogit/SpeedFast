@@ -1,5 +1,5 @@
 ![Duoc UC](https://www.duoc.cl/wp-content/uploads/2022/09/logo-0.png)
-# 🧠 Actividad Semana 3 – Desarrollo Orientado a Objetos II
+# 🧠 Actividad Semana 4 – Desarrollo Orientado a Objetos II
 
 ## 👤 Autor del proyecto
 - **Nombre completo:** Nicolas Salgado
@@ -10,9 +10,9 @@
 ---
 
 ## 📘 Descripción general del sistema
-Este proyecto corresponde a la actividad sumativa de la Semana 3 de la asignatura Desarrollo Orientado a Objetos II: la **versión integral** del sistema de entregas de **SpeedFast**, que reúne en un solo diseño lo trabajado en las semanas anteriores — polimorfismo, abstracción — e incorpora **interfaces** para desacoplar responsabilidades funcionales.
+Este proyecto corresponde a la actividad formativa de la Semana 4 de la asignatura Desarrollo Orientado a Objetos II: incorporar **programación concurrente** al sistema de entregas de **SpeedFast**. Se reutiliza toda la estructura de las semanas anteriores (`Pedido` abstracta, sus subclases y las interfaces `Despachable`, `Cancelable`, `Rastreable`), y se agrega la clase `Repartidor`, que simula a cada repartidor entregando sus pedidos **en paralelo** mediante hilos.
 
-`Pedido` sigue siendo la clase abstracta base (atributos comunes, `mostrarResumen()` implementado, `calcularTiempoEntrega()` abstracto), y sus subclases `PedidoComida`, `PedidoEncomienda` y `PedidoExpress` sobrescriben tanto `calcularTiempoEntrega()` como las dos versiones de `asignarRepartidor()` (genérica y sobrecargada). A esto se suman las interfaces `Despachable`, `Cancelable` y `Rastreable`, implementadas en conjunto por la clase `ControladorDeEnvios`, que gestiona el ciclo de vida de los pedidos y mantiene un historial de despachos mediante un `ArrayList<Pedido>`.
+`Repartidor` implementa `Runnable`: en su método `run()` recorre su lista de pedidos asignados, imprime el avance de cada entrega y simula el tiempo de viaje con `Thread.sleep()` usando pausas aleatorias. En `Main`, se instancian tres repartidores (cada uno con dos o más pedidos) y se ejecutan simultáneamente mediante un `ExecutorService`, que administra el pool de hilos y espera a que todas las entregas finalicen antes de terminar el programa.
 
 ---
 
@@ -21,24 +21,19 @@ Este proyecto corresponde a la actividad sumativa de la Semana 3 de la asignatur
 ```plaintext
 📁 src/
 ├── ui/      # Clase principal con el método main
-├── model/   # Pedido (abstracta), PedidoComida, PedidoEncomienda, PedidoExpress,
-│            # Despachable, Cancelable, Rastreable (interfaces)
-└── data/    # ControladorDeEnvios
+└── model/   # Pedido (abstracta), PedidoComida, PedidoEncomienda, PedidoExpress,
+             # Despachable, Cancelable, Rastreable (interfaces), Repartidor (Runnable)
 ```
 
 ## 🧩 Paquetes y clases implementadas
 
 | Clase / Interfaz | Paquete | Descripción |
 |---|---|---|
-| `Pedido` | `model` | Clase abstracta: atributos comunes, `mostrarResumen()` implementado, `calcularTiempoEntrega()` abstracto, y `asignarRepartidor()` (genérico y sobrecargado) |
-| `PedidoComida` | `model` | Extiende `Pedido`. Valida mochila térmica; `calcularTiempoEntrega()`: 15 + 2 min/km |
-| `PedidoEncomienda` | `model` | Extiende `Pedido`. Valida peso y embalaje; `calcularTiempoEntrega()`: 20 + 1.5 min/km (redondeado) |
-| `PedidoExpress` | `model` | Extiende `Pedido`. Valida disponibilidad inmediata; `calcularTiempoEntrega()`: 10 min base, +5 si supera 5 km |
-| `Despachable` | `model` | Interfaz: declara `despachar(Pedido p)` |
-| `Cancelable` | `model` | Interfaz: declara `cancelar(Pedido p)` |
-| `Rastreable` | `model` | Interfaz: declara `verHistorial()` |
-| `ControladorDeEnvios` | `data` | Implementa las 3 interfaces. Mantiene un `ArrayList<Pedido>` con el historial de pedidos despachados |
-| `Main` | `ui` | Simula el flujo completo: asignación automática y manual de repartidor, cálculo de tiempo estimado, despacho, cancelación y visualización del historial, diferenciando por tipo de pedido |
+| `Pedido` | `model` | Clase abstracta: atributos comunes, `mostrarResumen()` implementado, `calcularTiempoEntrega()` abstracto, `asignarRepartidor()` (genérico y sobrecargado) |
+| `PedidoComida` / `PedidoEncomienda` / `PedidoExpress` | `model` | Subclases de `Pedido`, cada una con su lógica propia de validación y cálculo de tiempo |
+| `Despachable` / `Cancelable` / `Rastreable` | `model` | Interfaces que declaran `despachar()`, `cancelar()` y `verHistorial()` |
+| `Repartidor` | `model` | Implementa `Runnable`. Contiene `nombre` y una lista de `Pedido` asignados; su `run()` recorre los pedidos, simula la entrega de cada uno con `Thread.sleep()` (tiempo aleatorio) e informa el progreso por consola |
+| `Main` | `ui` | Instancia 3 repartidores con 2+ pedidos cada uno y los ejecuta en paralelo usando `ExecutorService`, esperando con `awaitTermination()` a que todas las entregas concluyan |
 
 ---
 
@@ -50,20 +45,16 @@ Este proyecto corresponde a la actividad sumativa de la Semana 3 de la asignatur
 git clone https://github.com/nicosalgadogit/SpeedFast.git
 ```
 
-2. Abre el proyecto en IntelliJ IDEA. El código de esta entrega se encuentra dentro de la carpeta `semana 3`.
+2. Abre el proyecto en IntelliJ IDEA. El código de esta entrega se encuentra dentro de la carpeta `semana 4`.
 
 3. Ejecuta el archivo `Main.java` desde el paquete `ui`.
 
-4. Por consola se mostrará, para cada tipo de pedido:
-   - El resumen básico del pedido (`mostrarResumen()`).
-   - La asignación de repartidor automática y manual, con su validación específica.
-   - El tiempo estimado de entrega.
-   - Al final, el despacho, la cancelación de un pedido, y el historial completo de pedidos despachados.
+4. Por consola se mostrará, de forma intercalada, el avance de las entregas de los 3 repartidores ejecutándose en paralelo: inicio de cada entrega, resumen del pedido, y confirmación al completarla con el tiempo simulado. El orden exacto de los mensajes puede variar entre ejecuciones, evidenciando la concurrencia real de los hilos.
 
 ---
 
-**Repositorio GitHub:** \[https://github.com/nicosalgadogit/SpeedFast.git
- **Fecha de entrega:** \[31-08-2026]
+**Repositorio GitHub:** \[https://github.com/nicosalgadogit/SpeedFast.git]
+** Fecha de entrega:** \[13-09-2026]
 
 ---
 
