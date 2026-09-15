@@ -1,8 +1,8 @@
 package ui;
 
-import model.*;
-import java.util.ArrayList;
-import java.util.List;
+import model.Pedido;
+import model.Repartidor;
+import model.ZonaDeCarga;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -10,26 +10,22 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) {
 
-        List<Pedido> pedidos1 = new ArrayList<>();
-        pedidos1.add(new PedidoComida(true, 123, "Calle los toros", 4));
-        pedidos1.add(new PedidoExpress(true, 124, "Calle los patos", 2));
+        ZonaDeCarga zonaDeCarga = new ZonaDeCarga();
 
+        zonaDeCarga.agregarPedido(new Pedido(123, "Calle Las Vizcachas 124"));
+        zonaDeCarga.agregarPedido(new Pedido(254, "Calle Los Patos 312"));
+        zonaDeCarga.agregarPedido(new Pedido(377, "Calle Parque del agua 789"));
+        zonaDeCarga.agregarPedido(new Pedido(488, "Calle Las Rosas 12"));
+        zonaDeCarga.agregarPedido(new Pedido(545, "Calle Los Gatos 453"));
+        zonaDeCarga.agregarPedido(new Pedido(689, "Calle Los Perros 654"));
 
-        List<Pedido> pedidos2 = new ArrayList<>();
-        pedidos2.add(new PedidoComida(true, 153, "Calle los robles", 6));
-        pedidos2.add(new PedidoExpress(true, 154, "Calle los perros", 5));
+        zonaDeCarga.marcarSinMasPedidos();
 
-        List<Pedido> pedidos3 = new ArrayList<>();
-        pedidos3.add(new PedidoComida(true, 127, "Calle los gatos", 7));
-        pedidos3.add(new PedidoExpress(true, 126, "Calle los pajaros", 8));
-
-
-        Repartidor r1 = new Repartidor("Juan", pedidos1);
-        Repartidor r2 = new Repartidor("Pedro", pedidos2);
-        Repartidor r3 = new Repartidor("Jose", pedidos3);
+        Repartidor r1 = new Repartidor("Repartidor-1", zonaDeCarga);
+        Repartidor r2 = new Repartidor("Repartidor-2", zonaDeCarga);
+        Repartidor r3 = new Repartidor("Repartidor-3", zonaDeCarga);
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
-
         executor.submit(r1);
         executor.submit(r2);
         executor.submit(r3);
@@ -40,7 +36,7 @@ public class Main {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        System.out.println("Todas las entregas han finalizado.");
-    }
 
+        System.out.println("Todos los pedidos han sido entregados correctamente.");
+    }
 }

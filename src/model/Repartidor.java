@@ -1,49 +1,36 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 public class Repartidor implements Runnable {
 
     private String nombre;
-    private List<Pedido> pedidos;
+    private ZonaDeCarga zonaDeCarga;
 
-    public Repartidor(String nombre, List<Pedido> pedidos) {
+    public Repartidor(String nombre, ZonaDeCarga zonaDeCarga) {
         this.nombre = nombre;
-        this.pedidos = pedidos;
+        this.zonaDeCarga = zonaDeCarga;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
     @Override
     public void run() {
-        Random random = new Random();
-        for (Pedido p : pedidos) {
-            System.out.println(nombre + " esta iniciando la entrega del pedido #" + p.getIdPedido());
-                p.mostrarResumen();
-            int tiempoEspera = random.nextInt(3000) + 1000;
+        while (true) {
+            Pedido p = zonaDeCarga.retirarPedido();
+            if (p == null) break;
+
+            p.setEstado(EstadoPedido.EN_REPARTO);
+            System.out.println(nombre + " retiró y está en reparto: " + p);
+
             try {
-                Thread.sleep(tiempoEspera);
+                Thread.sleep(1000 + (int) (Math.random() * 2000));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
-            System.out.println(nombre + " completó la entrega del pedido #" + p.getIdPedido() + " (" + tiempoEspera + ")");
+
+            p.setEstado(EstadoPedido.ENTREGADO);
+            System.out.println(nombre + " completó la entrega: " + p);
         }
-        System.out.println(nombre + " ha finalizado todas sus entregas.");
+        System.out.println(nombre + " no tiene más pedidos por retirar. Fin de turno.");
     }
 }
